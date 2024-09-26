@@ -88,7 +88,11 @@ const SignUp = ({navigation}: any) => {
         <Pressable onPress={() => navigation.navigate('login')}>
           <Text style={authStyle.authText}>Already have an account?</Text>
         </Pressable>
-        <Button title="SIGN UP" color="#009EFF" />
+        <Button
+          onPress={() => formik.handleSubmit()}
+          title="SIGN UP"
+          color="#009EFF"
+        />
       </View>
     </SafeAreaView>
   );
