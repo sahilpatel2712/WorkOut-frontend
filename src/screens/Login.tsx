@@ -12,6 +12,8 @@ import * as Yup from 'yup';
 import {globalStyles} from '../assets/styles/global';
 import {authStyle} from '../assets/styles/authStyle';
 import {LockIcon, UserIcon} from '../assets/svg/svg';
+import {useAppDispatch} from '../redux/hook';
+import {login} from '../redux/user/userSlice';
 
 const initialValue = {
   email: '',
@@ -23,8 +25,10 @@ const validation = Yup.object({
 });
 
 const Login = ({navigation}: any) => {
+  const dispatch = useAppDispatch();
+
   const handleSubmit = (value: any) => {
-    console.log(value);
+    dispatch(login(value));
   };
 
   const formik = useFormik({
