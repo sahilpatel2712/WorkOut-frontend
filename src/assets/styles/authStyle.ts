@@ -7,6 +7,7 @@ export const authStyle = StyleSheet.create({
   },
   textInput: {
     color: '#000',
+    width: '100%',
   },
   textInputContainer: {
     flexDirection: 'row',
@@ -19,6 +20,6 @@ export const authStyle = StyleSheet.create({
     color: 'blue',
     textAlign: 'right',
     fontWeight: '500',
-    width:"100%",
+    width: '100%',
   },
 });

@@ -8,32 +8,31 @@ import {
   View,
 } from 'react-native';
 import {useFormik} from 'formik';
-import * as Yup from 'yup';
 import {globalStyles} from '../assets/styles/global';
 import {authStyle} from '../assets/styles/authStyle';
 import {LockIcon, UserIcon} from '../assets/svg/svg';
 import {useAppDispatch} from '../redux/hook';
 import {login} from '../redux/user/userSlice';
+import {signInValidation} from '../utils/formikValidation';
 
 const initialValue = {
   email: '',
   password: '',
 };
-const validation = Yup.object({
-  email: Yup.string().required('Required'),
-  password: Yup.string().required('Required'),
-});
 
 const Login = ({navigation}: any) => {
   const dispatch = useAppDispatch();
-
   const handleSubmit = (value: any) => {
-    dispatch(login(value));
+    dispatch(login(value, handleNavigation));
+  };
+
+  const handleNavigation = () => {
+    navigation.navigate('home');
   };
 
   const formik = useFormik({
     initialValues: initialValue,
-    validationSchema: validation,
+    validationSchema: signInValidation,
     onSubmit: handleSubmit,
   });
 
