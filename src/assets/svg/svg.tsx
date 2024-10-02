@@ -51,3 +51,15 @@ export const LogOutIcon = () => (
     />
   </Svg>
 );
+
+export const DownIcon = () => (
+  <Svg viewBox="0 0 24 24" fill="none" width={24} height={24}>
+    <Path
+      d="M7 10L12 15L17 10"
+      stroke="#000000"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);

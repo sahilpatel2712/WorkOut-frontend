@@ -17,7 +17,6 @@ export const homeStyles = StyleSheet.create({
   },
   inputContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'center',
     gap: 8,
     marginVertical: 10,
@@ -34,5 +33,20 @@ export const homeStyles = StyleSheet.create({
     color: '#000',
     maxHeight: 40,
     borderRadius: 5,
+  },
+  modalView: {
+    justifyContent: 'center',
+    backgroundColor: '#fff',
+    elevation: 5,
+    borderRadius: 8,
+    width: '65%',
+    padding: 20,
+    gap: 30,
+  },
+  caloriesText: {
+    color: '#6EC207',
+    textAlign: 'center',
+    fontSize: 30,
+    fontWeight: '700',
   },
 });

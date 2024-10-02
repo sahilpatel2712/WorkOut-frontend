@@ -13,12 +13,24 @@ import dayjs from 'dayjs';
 import {globalStyles} from '../assets/styles/global';
 import {recordStyles} from '../assets/styles/record';
 import {CalendarIcon} from '../assets/svg/svg';
-import DateTimePicker from 'react-native-ui-datepicker';
+import DateTimePicker, {DateType} from 'react-native-ui-datepicker';
+import {getWorkOutRecords} from '../api-service/records';
+import {useAppSelector} from '../redux/hook';
 const list = [1, 2, 3, 4, 5, 6];
 const Records = () => {
+  const auth = useAppSelector(state => state.user);
   const [datePickerShown, setDatePickerShown] = React.useState(false);
   const [date, setDate] = React.useState<any>(dayjs());
   const [initialFlag, setInitialFlag] = React.useState(true);
+
+  const handleDateChange = async (date: DateType) => {
+    try {
+      const res = await getWorkOutRecords({date: date}, auth.token);
+      // console.log(res);
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
 
   return (
     <SafeAreaView
@@ -78,7 +90,10 @@ const Records = () => {
               marginRight: 10,
               marginBottom: 20,
             }}
-            onPress={() => setDatePickerShown(false)}>
+            onPress={() => {
+              handleDateChange(date);
+              setDatePickerShown(false);
+            }}>
             <Text style={{color: '#fff', fontWeight: '500'}}>SET</Text>
           </TouchableOpacity>
         </View>
@@ -87,18 +102,53 @@ const Records = () => {
         {list.map(value => (
           <View style={recordStyles.recordContainer} key={value}>
             <View style={{gap: 5}}>
-              <Text style={recordStyles.recordText}>Duration - 30 min</Text>
-              <Text style={recordStyles.recordText}>Age - 30</Text>
-              <Text style={recordStyles.recordText}>Height - 130 cm</Text>
-              <Text style={recordStyles.recordText}>Weight - 60 kg</Text>
-              <Text style={recordStyles.recordText}>Gender - Male</Text>
-              <Text style={recordStyles.recordText}>Heart Rate - 80 BPM</Text>
-              <Text style={recordStyles.recordText}>
-                Body Temperature - 20 °C
-              </Text>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={[recordStyles.recordText, {color: '#686D76'}]}>
+                  Duration -{' '}
+                </Text>
+                <Text style={recordStyles.recordText}>30 min</Text>
+              </View>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={[recordStyles.recordText, {color: '#686D76'}]}>
+                  Age -{' '}
+                </Text>
+                <Text style={recordStyles.recordText}>30</Text>
+              </View>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={[recordStyles.recordText, {color: '#686D76'}]}>
+                  Height -{' '}
+                </Text>
+                <Text style={recordStyles.recordText}>130 cm</Text>
+              </View>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={[recordStyles.recordText, {color: '#686D76'}]}>
+                  Weight -{' '}
+                </Text>
+                <Text style={recordStyles.recordText}>60 kg</Text>
+              </View>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={[recordStyles.recordText, {color: '#686D76'}]}>
+                  Gender -{' '}
+                </Text>
+                <Text style={recordStyles.recordText}>Male</Text>
+              </View>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={[recordStyles.recordText, {color: '#686D76'}]}>
+                  Heart Rate -{' '}
+                </Text>
+                <Text style={recordStyles.recordText}>80 BPM</Text>
+              </View>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={[recordStyles.recordText, {color: '#686D76'}]}>
+                  Body Temperature -{' '}
+                </Text>
+                <Text style={recordStyles.recordText}>20 °C</Text>
+              </View>
             </View>
             <View style={{gap: 5}}>
-              <Text style={recordStyles.recordText}>Total Calories</Text>
+              <Text style={[recordStyles.recordText, {color: '#686D76'}]}>
+                Total Calories
+              </Text>
               <Text style={[recordStyles.recordText, {textAlign: 'center'}]}>
                 360 kcal
               </Text>
