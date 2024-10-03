@@ -16,21 +16,27 @@ import {CalendarIcon} from '../assets/svg/svg';
 import DateTimePicker, {DateType} from 'react-native-ui-datepicker';
 import {getWorkOutRecords} from '../api-service/records';
 import {useAppSelector} from '../redux/hook';
-const list = [1, 2, 3, 4, 5, 6];
+import CustomCard from '../components/CustomCard';
 const Records = () => {
   const auth = useAppSelector(state => state.user);
   const [datePickerShown, setDatePickerShown] = React.useState(false);
-  const [date, setDate] = React.useState<any>(dayjs());
+  const [date, setDate] = React.useState<any>(dayjs().toISOString());
   const [initialFlag, setInitialFlag] = React.useState(true);
+  const [recordList, setRecordList] = React.useState([]);
+  const [totalCalories, setTotalCalories] = React.useState(0);
 
   const handleDateChange = async (date: DateType) => {
     try {
       const res = await getWorkOutRecords({date: date}, auth.token);
-      // console.log(res);
+      setRecordList(res?.exercises || []);
+      setTotalCalories(res?.total_calories || 0);
     } catch (error: any) {
       console.log(error);
     }
   };
+  React.useEffect(() => {
+    handleDateChange(dayjs().toISOString());
+  }, []);
 
   return (
     <SafeAreaView
@@ -98,64 +104,24 @@ const Records = () => {
           </TouchableOpacity>
         </View>
       </Modal>
-      <ScrollView style={recordStyles.scrollContainer}>
-        {list.map(value => (
-          <View style={recordStyles.recordContainer} key={value}>
-            <View style={{gap: 5}}>
-              <View style={{flexDirection: 'row'}}>
-                <Text style={[recordStyles.recordText, {color: '#686D76'}]}>
-                  Duration -{' '}
-                </Text>
-                <Text style={recordStyles.recordText}>30 min</Text>
-              </View>
-              <View style={{flexDirection: 'row'}}>
-                <Text style={[recordStyles.recordText, {color: '#686D76'}]}>
-                  Age -{' '}
-                </Text>
-                <Text style={recordStyles.recordText}>30</Text>
-              </View>
-              <View style={{flexDirection: 'row'}}>
-                <Text style={[recordStyles.recordText, {color: '#686D76'}]}>
-                  Height -{' '}
-                </Text>
-                <Text style={recordStyles.recordText}>130 cm</Text>
-              </View>
-              <View style={{flexDirection: 'row'}}>
-                <Text style={[recordStyles.recordText, {color: '#686D76'}]}>
-                  Weight -{' '}
-                </Text>
-                <Text style={recordStyles.recordText}>60 kg</Text>
-              </View>
-              <View style={{flexDirection: 'row'}}>
-                <Text style={[recordStyles.recordText, {color: '#686D76'}]}>
-                  Gender -{' '}
-                </Text>
-                <Text style={recordStyles.recordText}>Male</Text>
-              </View>
-              <View style={{flexDirection: 'row'}}>
-                <Text style={[recordStyles.recordText, {color: '#686D76'}]}>
-                  Heart Rate -{' '}
-                </Text>
-                <Text style={recordStyles.recordText}>80 BPM</Text>
-              </View>
-              <View style={{flexDirection: 'row'}}>
-                <Text style={[recordStyles.recordText, {color: '#686D76'}]}>
-                  Body Temperature -{' '}
-                </Text>
-                <Text style={recordStyles.recordText}>20 °C</Text>
-              </View>
-            </View>
-            <View style={{gap: 5}}>
-              <Text style={[recordStyles.recordText, {color: '#686D76'}]}>
-                Total Calories
-              </Text>
-              <Text style={[recordStyles.recordText, {textAlign: 'center'}]}>
-                360 kcal
-              </Text>
-            </View>
-          </View>
-        ))}
-      </ScrollView>
+      {recordList.length !== 0 ? (
+        <ScrollView style={recordStyles.scrollContainer}>
+          {recordList.length !== 0
+            ? recordList.map((value: any) => (
+                <React.Fragment key={value.id}>
+                  <CustomCard value={value} />
+                </React.Fragment>
+              ))
+            : null}
+        </ScrollView>
+      ) : (
+        <View style={{flex: 1, justifyContent: 'center'}}>
+          <Text style={{color: '#fff', fontSize: 18, fontWeight: '600'}}>
+            No exercise data found for the given date
+          </Text>
+        </View>
+      )}
+
       <View
         style={[
           recordStyles.dataText,
@@ -165,7 +131,7 @@ const Records = () => {
           Total Calories Burn
         </Text>
         <Text style={{fontSize: 18, color: '#6EC207', fontWeight: '700'}}>
-          600 kcal
+          {totalCalories} kcal
         </Text>
       </View>
     </SafeAreaView>
