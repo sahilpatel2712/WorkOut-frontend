@@ -15,8 +15,15 @@ import CustomField from '../components/CustomInput';
 import {DownIcon} from '../assets/svg/svg';
 import {Dropdown} from 'react-native-element-dropdown';
 import {calculateCalories} from '../api-service/home';
-import {useAppSelector} from '../redux/hook';
-import {ErrorToast} from '../utils/toast';
+import {useAppDispatch, useAppSelector} from '../redux/hook';
+import {ErrorToast, SuccessToast} from '../utils/toast';
+import {updateRecord} from '../api-service/records';
+import {
+  useFocusEffect,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
+import {loaderState} from '../redux/loader/loaderSlice';
 
 type CaloriesModalProps = {
   modalVisible: boolean;
@@ -26,16 +33,17 @@ type CaloriesModalProps = {
 };
 
 const validation = Yup.object({
-  age: Yup.string().required('Require'),
-  height: Yup.string().required('Require'),
-  weight: Yup.string().required('Require'),
-  duration: Yup.string().required('Require'),
-  heart_rate: Yup.string().required('Require'),
-  gender: Yup.string().required('Require'),
-  body_temp: Yup.string().required('Require'),
+  age: Yup.number().min(1, 'Must be 1 or greater').required('Required'),
+  height: Yup.number().min(1, 'Must be 1 or greater').required('Required'),
+  weight: Yup.number().min(1, 'Must be 1 or greater').required('Required'),
+  duration: Yup.number().min(1, 'Must be 1 or greater').required('Required'),
+  heart_rate: Yup.number().min(1, 'Must be 1 or greater').required('Required'),
+  gender: Yup.string().required('Required'),
+  body_temp: Yup.number().min(1, 'Must be 1 or greater').required('Required'),
 });
 
 const initialValue = {
+  id: 0,
   age: '',
   height: '',
   weight: '',
@@ -46,25 +54,47 @@ const initialValue = {
 };
 
 const Home = () => {
-  const [modalVisible, setModalVisible] = React.useState(false);
+  const navigation = useNavigation();
+  const route = useRoute();
   const auth = useAppSelector(state => state.user);
+  const dispatch = useAppDispatch();
+  const [modalVisible, setModalVisible] = React.useState(false);
   const [calories, setCalories] = React.useState<number | null>(null);
+  const [recordData, setRecordData] = React.useState(
+    route.params?.record || initialValue,
+  );
 
   const handleSubmit = async (value: any, {resetForm}: any) => {
+    dispatch(loaderState(true));
     try {
-      const data = await calculateCalories(value, auth.token);
-      setCalories(data?.calories || null);
+      if (value?.id === 0) {
+        const data = await calculateCalories(value, auth.token);
+        setCalories(data?.calories || null);
+        SuccessToast(data?.message);
+      } else {
+        const data = await updateRecord(value, auth.token);
+        setCalories(data?.calories || null);
+        SuccessToast(data?.message);
+      }
       setModalVisible(true);
-      resetForm();
+      resetForm({values: initialValue});
     } catch (error: any) {
       ErrorToast(error.response?.data?.message);
     }
+    dispatch(loaderState(false));
   };
   const formik = useFormik({
-    initialValues: initialValue,
+    initialValues: recordData,
     validationSchema: validation,
     onSubmit: handleSubmit,
+    enableReinitialize: true,
   });
+
+  useFocusEffect(
+    React.useCallback(() => {
+      setRecordData(route.params?.record || initialValue);
+    }, [route.params]),
+  );
 
   return (
     <SafeAreaView
@@ -100,7 +130,9 @@ const Home = () => {
               style={[homeStyles.inputField, {padding: 10}]}
             />
             {formik.errors.gender && formik.touched.gender ? (
-              <Text style={{color: 'red'}}>{formik.errors.gender}</Text>
+              <Text style={{color: 'red'}}>
+                {formik.errors.gender as string}
+              </Text>
             ) : null}
           </View>
 
@@ -153,8 +185,20 @@ const Home = () => {
             inputMode="decimal"
           />
         </View>
-        <View style={[homeStyles.inputContainer, {marginVertical: 30}]}>
-          <Button onPress={() => formik.handleSubmit()} title="Calculate" />
+        <View
+          style={[homeStyles.inputContainer, {marginVertical: 30, gap: 30}]}>
+          <Button
+            onPress={() => {
+              formik.resetForm({values: initialValue});
+              navigation.setParams({records: undefined});
+            }}
+            title="Reset"
+            color="#B31312"
+          />
+          <Button
+            onPress={() => formik.handleSubmit()}
+            title={formik.values.id == 0 ? 'Calculate' : 'Update'}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>

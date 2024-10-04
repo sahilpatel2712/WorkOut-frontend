@@ -1,9 +1,10 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {AppDispatch} from '../store';
+import {AppDispatch, AppStore} from '../store';
 import {BASE_URL} from '@env';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ErrorToast, SuccessToast} from '../../utils/toast';
+import {loaderState} from '../loader/loaderSlice';
 
 const userSlice = createSlice({
   name: 'user',
@@ -25,6 +26,7 @@ const {setToken, setUsername} = userSlice.actions;
 
 export const signUp = (data: any, navigation: () => void) => {
   return async (dispatch: AppDispatch) => {
+    dispatch(loaderState(true));
     try {
       const response = await axios.post(BASE_URL + '/signup', data);
       await AsyncStorage.setItem('authToken', response.data?.token);
@@ -36,10 +38,12 @@ export const signUp = (data: any, navigation: () => void) => {
     } catch (error: any) {
       ErrorToast(error.response?.data?.message);
     }
+    dispatch(loaderState(false));
   };
 };
 export const login = (data: any, navigation: () => void) => {
   return async (dispatch: AppDispatch) => {
+    dispatch(loaderState(true));
     try {
       const response = await axios.post(BASE_URL + '/login', data);
       await AsyncStorage.setItem('authToken', response.data?.token);
@@ -51,11 +55,13 @@ export const login = (data: any, navigation: () => void) => {
     } catch (error: any) {
       ErrorToast(error.response?.data?.message);
     }
+    dispatch(loaderState(false));
   };
 };
 
 export const initializeData = () => {
   return async (dispatch: AppDispatch) => {
+    dispatch(loaderState(true));
     try {
       const token = await AsyncStorage.getItem('authToken');
       const username = await AsyncStorage.getItem('authUsername');
@@ -64,6 +70,7 @@ export const initializeData = () => {
     } catch (error) {
       ErrorToast(JSON.stringify(error));
     }
+    dispatch(loaderState(false));
   };
 };
 
@@ -74,6 +81,7 @@ export const logOut = () => {
       await AsyncStorage.removeItem('authUsername');
       dispatch(setToken(''));
       dispatch(setUsername(''));
+      SuccessToast('Log Out Successfully');
     } catch (error) {
       ErrorToast(JSON.stringify(error));
     }

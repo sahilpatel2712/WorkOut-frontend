@@ -13,12 +13,7 @@ export const recordStyles = StyleSheet.create({
   },
   recordContainer: {
     flexDirection: 'row',
-    backgroundColor: '#fff',
-    elevation: 5,
-    width: '100%',
-    borderRadius: 5,
     padding: 10,
-    marginBottom: 20,
     justifyContent: 'space-evenly',
   },
   recordText: {

@@ -8,7 +8,7 @@ export const labelStyles = StyleSheet.create({
   },
   labelText: {
     fontSize: 13,
-    color: '#686D76',
+    color: '#333',
     fontWeight:"500"
   },
 });

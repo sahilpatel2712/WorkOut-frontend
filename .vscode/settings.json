@@ -3,5 +3,6 @@
         "formik",
         "Pressable",
         "reduxjs"
-    ]
+    ],
+    "java.configuration.updateBuildConfiguration": "disabled"
 }

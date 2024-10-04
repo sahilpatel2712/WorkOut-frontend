@@ -25,7 +25,7 @@ const CustomField = ({
         inputMode={inputMode || 'text'}
         placeholderTextColor="#B7B7B7"
         style={homeStyles.inputField}
-        value={formik.values[name]}
+        value={String(formik.values[name])}
         onChangeText={formik.handleChange(name)}
         onBlur={formik.handleBlur(name)}
       />

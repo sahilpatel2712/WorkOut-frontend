@@ -7,3 +7,10 @@ export const graphData = async (data: any, token: string) => {
   });
   return response.data;
 };
+
+export const timeGraphData = async (data: any, token: string) => {
+  const response = await axios.post(BASE_URL + '/get-time-data', data, {
+    headers: {Authorization: token},
+  });
+  return response.data;
+};

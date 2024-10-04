@@ -1,5 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
-import {Path, Svg} from 'react-native-svg';
+import {Path, Polygon, Rect, Svg} from 'react-native-svg';
 
 export const UserIcon = () => (
   <Svg viewBox="0 0 24 24" fill="none" width="24" height="24">
@@ -63,3 +63,120 @@ export const DownIcon = () => (
     />
   </Svg>
 );
+
+export const TrashIcon = () => {
+  return (
+    <Svg viewBox="0 0 24 24" fill="none" width={24} height={24}>
+      <Path
+        d="M10 12V17"
+        stroke="#B31312"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path
+        d="M14 12V17"
+        stroke="#B31312"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path
+        d="M4 7H20"
+        stroke="#B31312"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path
+        d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10"
+        stroke="#B31312"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path
+        d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z"
+        stroke="#B31312"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Svg>
+  );
+};
+
+export const PencilIcon = () => {
+  return (
+    <Svg viewBox="0 0 24 24" fill="none" width={24} height={24}>
+      <Path
+        d="M21.2799 6.40005L11.7399 15.94C10.7899 16.89 7.96987 17.33 7.33987 16.7C6.70987 16.07 7.13987 13.25 8.08987 12.3L17.6399 2.75002C17.8754 2.49308 18.1605 2.28654 18.4781 2.14284C18.7956 1.99914 19.139 1.92124 19.4875 1.9139C19.8359 1.90657 20.1823 1.96991 20.5056 2.10012C20.8289 2.23033 21.1225 2.42473 21.3686 2.67153C21.6147 2.91833 21.8083 3.21243 21.9376 3.53609C22.0669 3.85976 22.1294 4.20626 22.1211 4.55471C22.1128 4.90316 22.0339 5.24635 21.8894 5.5635C21.7448 5.88065 21.5375 6.16524 21.2799 6.40005V6.40005Z"
+        stroke="#000000"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path
+        d="M11 4H6C4.93913 4 3.92178 4.42142 3.17163 5.17157C2.42149 5.92172 2 6.93913 2 8V18C2 19.0609 2.42149 20.0783 3.17163 20.8284C3.92178 21.5786 4.93913 22 6 22H17C19.21 22 20 20.2 20 18V13"
+        stroke="#000000"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Svg>
+  );
+};
+
+export const ListIcon = () => {
+  return (
+    <Svg viewBox="0 0 16 16" fill="none" width={24} height={24}>
+      <Path d="M3 1H1V3H3V1Z" fill="#333" />
+      <Path d="M3 5H1V7H3V5Z" fill="#333" />
+      <Path d="M1 9H3V11H1V9Z" fill="#333" />
+      <Path d="M3 13H1V15H3V13Z" fill="#333" />
+      <Path d="M15 1H5V3H15V1Z" fill="#333" />
+      <Path d="M15 5H5V7H15V5Z" fill="#333" />
+      <Path d="M5 9H15V11H5V9Z" fill="#333" />
+      <Path d="M15 13H5V15H15V13Z" fill="#333" />
+    </Svg>
+  );
+};
+
+export const CalculationIcon = () => {
+  return (
+    <Svg fill="#333" viewBox="0 0 32 32" width={28} height={28}>
+      <Rect x="19" y="13" width="6" height="2" />
+      <Rect x="7" y="9" width="6" height="2" />
+      <Rect x="19" y="17" width="6" height="2" />
+
+      <Polygon points="13 21 11 21 11 19 9 19 9 21 7 21 7 23 9 23 9 25 11 25 11 23 13 23 13 21" />
+
+      <Path d="M27,3H5A2.0023,2.0023,0,0,0,3,5V27a2.0023,2.0023,0,0,0,2,2H27a2.0023,2.0023,0,0,0,2-2V5A2.0023,2.0023,0,0,0,27,3ZM15,5V15H5V5ZM5,17H15V27H5ZM17,27V5H27V27Z" />
+    </Svg>
+  );
+};
+
+export const graphIcon = () => {
+  return (
+    <Svg
+      viewBox="0 0 24 24"
+      fill="none"
+      width={28}
+      height={28}>
+      <Path
+        d="M4 5V19C4 19.5523 4.44772 20 5 20H19"
+        stroke="#333"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path
+        d="M18 9L13 13.9999L10.5 11.4998L7 14.9998"
+        stroke="#333"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Svg>
+  );
+};

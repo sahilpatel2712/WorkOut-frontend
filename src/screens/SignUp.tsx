@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Button,
+  Image,
   Pressable,
   SafeAreaView,
   Text,
@@ -13,7 +14,7 @@ import {globalStyles} from '../assets/styles/global';
 import {LockIcon, UserIcon} from '../assets/svg/svg';
 import {useAppDispatch} from '../redux/hook';
 import {signUp} from '../redux/user/userSlice';
-import { signUpValidation } from '../utils/formikValidation';
+import {signUpValidation} from '../utils/formikValidation';
 const initialValue = {
   username: '',
   email: '',
@@ -35,6 +36,12 @@ const SignUp = ({navigation}: any) => {
   });
   return (
     <SafeAreaView style={globalStyles.container}>
+      <View>
+        <Image
+          source={require('../assets/images/logo.png')}
+          style={{width: 75, height: 75, borderRadius: 5,marginBottom:25}}
+        />
+      </View>
       <View>
         <Text style={[authStyle.headingText, globalStyles.defaultTextColor]}>
           SIGN UP

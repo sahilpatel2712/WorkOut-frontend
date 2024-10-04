@@ -5,13 +5,14 @@ import Records from '../screens/Records';
 import Analysis from '../screens/Analysis';
 import CustomDrawer from '../components/CustomDrawer';
 import CommonLabels from '../components/CustomLabel';
+import {CalculationIcon, graphIcon, ListIcon} from '../assets/svg/svg';
 
 const Drawer = createDrawerNavigator();
 
 const ScreensName = [
-  {name: 'home', title: 'Calculator', component: Home},
-  {name: 'records', title: 'Records', component: Records},
-  {name: 'analysis', title: 'Analysis', component: Analysis},
+  {name: 'home', title: 'Calculator', component: Home, icon: CalculationIcon},
+  {name: 'records', title: 'Records', component: Records, icon: ListIcon},
+  {name: 'analysis', title: 'Analysis', component: Analysis, icon: graphIcon},
 ];
 
 const DrawerNavigation = () => {
@@ -23,7 +24,7 @@ const DrawerNavigation = () => {
           options={{
             title: DrawerItem.title,
             drawerLabel: () => (
-              <CommonLabels label={DrawerItem.title} icon={() => null} />
+              <CommonLabels label={DrawerItem.title} icon={DrawerItem.icon} />
             ),
           }}
           name={DrawerItem.name}

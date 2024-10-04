@@ -6,6 +6,7 @@ import {makeStore} from './redux/store';
 import Toast from 'react-native-toast-message';
 
 const App = () => {
+ 
   return (
     <Provider store={makeStore()}>
       <NavigationContainer>

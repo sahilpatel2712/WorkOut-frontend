@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Button,
+  Image,
   Pressable,
   SafeAreaView,
   Text,
@@ -38,6 +39,12 @@ const Login = ({navigation}: any) => {
 
   return (
     <SafeAreaView style={globalStyles.container}>
+       <View>
+        <Image
+          source={require('../assets/images/logo.png')}
+          style={{width: 75, height: 75, borderRadius: 5,marginBottom:25}}
+        />
+      </View>
       <View>
         <Text
           style={{...authStyle.headingText, ...globalStyles.defaultTextColor}}>
